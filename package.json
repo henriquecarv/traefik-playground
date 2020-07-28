@@ -1,0 +1,22 @@
+{
+  "name": "traefik-playground",
+  "version": "1.0.0",
+  "private": "true",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "clean": "lerna clean -y && rm -rf node_modules/",
+    "prestart": "yarn stop",
+    "start": "docker-compose up -d",
+    "stop": "docker-compose donw -v --remove-orphans",
+    "ncu": "lerna exec --parallel --stream -- ncu -u"
+  },
+  "repository": "git@github.com:henriquecarv/traefik-playground.git",
+  "author": "Henrique Carvalho da Cruz <henriquecarv.cruz@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@nestjs/cli": "^7.4.1",
+    "lerna": "^3.22.1"
+  }
+}
