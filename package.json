@@ -6,11 +6,12 @@
     "packages/*"
   ],
   "scripts": {
-    "clean": "lerna clean -y && rm -rf node_modules/",
+    "clean": "lerna clean -y; rm -rf node_modules/",
+    "preinstall": "yarn clean",
     "prestart": "yarn stop",
     "start": "docker-compose up -d",
     "stop": "docker-compose donw -v --remove-orphans",
-    "ncu": "lerna exec --parallel --stream -- ncu -u"
+    "ncu": "ncu -u; lerna exec --parallel --stream -- ncu -u"
   },
   "repository": "git@github.com:henriquecarv/traefik-playground.git",
   "author": "Henrique Carvalho da Cruz <henriquecarv.cruz@gmail.com>",
