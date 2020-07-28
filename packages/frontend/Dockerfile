@@ -1,6 +1,9 @@
 FROM node:lts-alpine
 
-WORKDIR /usr/src/app
+ARG PORT
+ENV PORT $PORT
+
+WORKDIR /app
 
 COPY package.json ./
 
@@ -16,6 +19,6 @@ RUN rm -rf node_modules/ src/ tsconfig.json package.json
 
 COPY entrypoint.sh ./
 
-EXPOSE 3000
+EXPOSE $PORT
 
 ENTRYPOINT [ "./entrypoint.sh" ]

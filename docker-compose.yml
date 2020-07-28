@@ -15,12 +15,44 @@ services:
     build:
       context: ./packages/frontend
       dockerfile: Dockerfile
+      args:
+        PORT: ${FE_PORT}
     restart: always
     container_name: frontend
     env_file: ./packages/frontend/.env
     depends_on:
       - reverse-proxy
     ports:
-      - 3000:3000
+      - ${FE_PORT}:${FE_PORT}
     labels:
       - "traefik.http.routers.frontend.rule=Host(`frontend.docker.localhost`)"
+
+  backend-one:
+    build:
+      context: ./packages/backend-one
+      dockerfile: Dockerfile
+      args:
+        PORT: ${BE_ONE_PORT}
+    restart: always
+    container_name: backend-one
+    depends_on:
+      - reverse-proxy
+    ports:
+      - ${BE_ONE_PORT}:${BE_ONE_PORT}
+    labels:
+      - "traefik.http.routers.backend-one.rule=Host(`backend-one.docker.localhost`)"
+
+  backend-two:
+    build:
+      context: ./packages/backend-two
+      dockerfile: Dockerfile
+      args:
+        PORT: ${BE_TWO_PORT}
+    restart: always
+    container_name: backend-two
+    depends_on:
+      - reverse-proxy
+    ports:
+      - ${BE_TWO_PORT}:${BE_TWO_PORT}
+    labels:
+      - "traefik.http.routers.backend-two.rule=Host(`backend-two.docker.localhost`)"

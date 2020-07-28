@@ -1,3 +1,3 @@
 #! /bin/sh
 
-serve -s build -p 3000
+serve -s build -p $PORT
