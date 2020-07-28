@@ -10,7 +10,7 @@
     "preinstall": "yarn clean",
     "prestart": "yarn stop",
     "start": "docker-compose up -d",
-    "stop": "docker-compose donw -v --remove-orphans",
+    "stop": "docker-compose down -v --remove-orphans",
     "ncu": "ncu -u; lerna exec --parallel --stream -- ncu -u"
   },
   "repository": "git@github.com:henriquecarv/traefik-playground.git",
