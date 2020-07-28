@@ -3,7 +3,9 @@ version: "3"
 services:
   reverse-proxy:
     image: traefik:v2.2
-    command: --api.insecure=true --providers.docker
+    command:
+      - --api.insecure=true
+      - --providers.docker
     container_name: reverse-proxy
     ports:
       - "80:80"
@@ -22,10 +24,11 @@ services:
     env_file: ./packages/frontend/.env
     depends_on:
       - reverse-proxy
-    ports:
-      - ${FE_PORT}:${FE_PORT}
     labels:
-      - "traefik.http.routers.frontend.rule=Host(`frontend.docker.localhost`)"
+      traefik.enable: "true"
+
+      traefik.http.routers.frontend.rule: Host(`frontend.docker.localhost`)
+      traefik.http.services.frontend.loadbalancer.server.port: ${FE_PORT}
 
   backend-one:
     build:
@@ -37,10 +40,11 @@ services:
     container_name: backend-one
     depends_on:
       - reverse-proxy
-    ports:
-      - ${BE_ONE_PORT}:${BE_ONE_PORT}
     labels:
-      - "traefik.http.routers.backend-one.rule=Host(`backend-one.docker.localhost`)"
+      traefik.enable: "true"
+
+      traefik.http.routers.backend-one.rule: Host(`backend-one.docker.localhost`)
+      traefik.http.services.backend-one.loadbalancer.server.port: ${BE_ONE_PORT}
 
   backend-two:
     build:
@@ -52,7 +56,8 @@ services:
     container_name: backend-two
     depends_on:
       - reverse-proxy
-    ports:
-      - ${BE_TWO_PORT}:${BE_TWO_PORT}
     labels:
-      - "traefik.http.routers.backend-two.rule=Host(`backend-two.docker.localhost`)"
+      traefik.enable: "true"
+
+      traefik.http.routers.backend-two.rule: Host(`backend-two.docker.localhost`)
+      traefik.http.services.backend-two.loadbalancer.server.port: ${BE_TWO_PORT}
