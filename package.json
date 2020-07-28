@@ -11,7 +11,8 @@
     "prestart": "yarn stop",
     "start": "docker-compose up -d",
     "stop": "docker-compose down -v --remove-orphans --rmi local",
-    "ncu": "ncu -u; lerna exec --parallel --stream -- ncu -u"
+    "ncu": "ncu -u; lerna exec --parallel --stream -- ncu -u",
+    "env": "[ -f .env ] || cp .env.example .env; lerna run env"
   },
   "repository": "git@github.com:henriquecarv/traefik-playground.git",
   "author": "Henrique Carvalho da Cruz <henriquecarv.cruz@gmail.com>",
